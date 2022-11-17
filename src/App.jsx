@@ -1,18 +1,18 @@
 import { useState, useEffect } from 'react'
 import Contact from './Contact'
 import useSWR from 'swr'
+import { useQuery } from '@tanstack/react-query'
 
-const fetcher = (...args) => fetch(...args).then((res) => res.json())
+const fetcher = () =>
+  fetch('https://jsonplaceholder.typicode.com/users').then((res) => res.json())
 
 function App() {
-  // const { data, error } = useSWR(
-  //   'https://jsonplaceholder.typicode.com/users',
-  //   fetcher
-  // )
-  const { data, error } = useSWR('https://jsonplaceholder.typicode.com/users', fetcher)
+  
+   const { isLoading, error, data } = useQuery(['contacts'], fetcher)
 
-   if (error) return <p>An error occurred</p>
-   if (!data) return <p>Loading</p>
+    if (isLoading) return <p>Loading</p>
+    if (error) return <p>An error occurred</p>
+
 
   return (
     <div className='App'>
