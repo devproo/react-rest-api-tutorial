@@ -6,14 +6,21 @@ import Contact from './Contact'
 function App() {
   const [contacts, setContacts] = useState([])
   const [error, setError] = useState(null)
-  useEffect(() => {
-    axios('https://jsonplaceholder.typicode.com/users')
-      .then((response) => {
-        setContacts(response.data)
-        setError(null)
-      })
-      .catch(setError)
-  }, [])
+  // useEffect(() => {
+  //   axios('https://jsonplaceholder.typicode.com/users')
+  //     .then((response) => {
+  //       setContacts(response.data)
+  //       setError(null)
+  //     })
+  //     .catch(setError)
+  // }, [])
+  fetch('https://jsonplaceholder.typicode.com/users')
+    .then((response) => response.json())
+    .then((response) => {
+      setContacts(response)
+      setError(null)
+    })
+    .catch(setError)
    if (error) return <p>An error occurred</p>
 
   return (
